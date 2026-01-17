@@ -30,9 +30,7 @@ const propertySchema = new Schema(
             {
                 type : String,
             }
-        ],
-        agentId : Schema.Types.ObjectId,
-        ref : "User"
+        ]
     },
     {
         timestamps : true

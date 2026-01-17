@@ -6,15 +6,13 @@ const leadSchema = new Schema(
             type : Schema.Types.ObjectId,
             ref : "Client"
         },
-        agentId : {
-            type : Schema.Types.ObjectId,
-            ref : "User"
-        },
+        
         source : {
             type : String
         },
         status : {
-            type : String
+            type : String,
+            required : true
         },
         budget : {
             type : Number

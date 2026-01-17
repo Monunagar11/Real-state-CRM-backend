@@ -10,9 +10,9 @@ const dealSchema = new Schema(
             type : Schema.Types.ObjectId,
             ref : "Property"
         },
-        agentId : {
-            type : Schema.Types.ObjectId,
-            ref : "User"
+        status : {
+            type : String,
+            required : true,
         }
     }
 );

@@ -2,27 +2,24 @@ import mongoose, { Schema } from "mongoose";
 
 const clientSchema = new Schema(
     {
-        leadId : {
-            type : Schema.Types.ObjectId,
-            ref : "Lead"
-        },
-        propertyId : {
-            type : Schema.Types.ObjectId,
-            ref : "Property"
-        },
-        agentId : {
-            type : Schema.Types.ObjectId,
-            ref : "User",
-        },
-        status : {
+        name : {
             type : String,
-            required : true
+            required : true,
         },
-        amount : {
+        email : {
+            type : String,
+            required : true,
+            unique : true,
+            index : true,
+        },
+        phone : {
             type : Number,
             required : true
+        },
+        prefrence : {
+            type : String,
         }
     }
 );
 
-export const Client = mongoose.model("Clent", clientSchema);
+export const Client = mongoose.model("Client", clientSchema);
