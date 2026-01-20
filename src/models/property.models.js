@@ -24,7 +24,10 @@ const propertySchema = new Schema(
         },
         status : {
             type : String,
-            required : true
+            required : true,
+            enum : ["DRAFT", "AVAILABLE", "INQUIRY_RECEIVED", "SITE_VISIT_SCHEDULED", "NEGOTIATION", 
+                    "BOOKED", "SOLD", "LEASED", "ON_HOLD", "CANCELLED"],
+            default : "DRAFT"
         },
         images : [
             {

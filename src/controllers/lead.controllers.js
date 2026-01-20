@@ -13,15 +13,15 @@ const createLead = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are required");
   }
 
-  const client = await Client.findById({ clientId });
+  const client = await Client.findById(clientId );
   if (!client) {
     throw new ApiError(404, "Cleint not exists");
   }
 
-  const lead = await Lead.findOne({ clientId });
-  if (lead) {
-    throw new ApiError(409, "lead already exists");
-  }
+//   const lead = await Lead.findOne({clientId});
+//   if (lead) {
+//     throw new ApiError(409, "lead already exists");
+//   }
 
   const createlead = await Lead.create({
     clientId,
@@ -42,7 +42,7 @@ const createLead = asyncHandler(async (req, res) => {
 
 const getAllLeads = asyncHandler(async (req, res) => {
   const leads = await Lead.find();
-  if (!lead) {
+  if (!leads) {
     throw new ApiError(400, "Something went wrong while fetching leads");
   }
   return res
@@ -119,11 +119,45 @@ const deleteLeadById = asyncHandler(async (req, res) => {
 });
 
 const updateLeadStatus = asyncHandler(async (req, res) => {
-  return res.status(200).json(new ApiResponse(200, "ALL leads"));
+  const id = req.params.id;
+  if (!id) {
+    throw new ApiError(400, "Lead id required");
+  }
+
+  const { status, budget, priority } = req.body;
+  if (!status) {
+    throw new ApiError(400, "Status filed is required");
+  }
+
+  const updatedLead = await Lead.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        status
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, updatedLead, "Lead updated successfully"));
 });
 
 const getLeadsStatsConversion = asyncHandler(async (req, res) => {
-  return res.status(200).json(new ApiResponse(200, "ALL leads"));
+    const leads = await Lead.aggregate([
+        {
+            $group : {
+                _id : "$status",
+                count : {$sum : 1}
+            }
+        }
+    ])
+  return res.status(200).json(new ApiResponse(200,
+    leads,
+    "Leads conversion"));
 });
 
 export {

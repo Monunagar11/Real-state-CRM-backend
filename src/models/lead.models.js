@@ -12,8 +12,11 @@ const leadSchema = new Schema(
         },
         status : {
             type : String,
-            required : true
+            required : true,
+            enum : ["NEW", "CONTACTED", "VISIT_SCHEDULED", "NEGOTIATION", "CONVERTED", "CLOSED"],
+            default : "NEW"
         },
+        
         budget : {
             type : Number
         },
